@@ -413,8 +413,7 @@ async def main():
             COST: [MessageHandler(filters.TEXT & ~filters.COMMAND, cost)],
             PERIOD: [MessageHandler(filters.TEXT & ~filters.COMMAND, period)],
         },
-        fallbacks=[CommandHandler('cancel', cancel)],
-        per_message=False)
+        fallbacks=[CommandHandler('cancel', cancel)])
 
     # Add handlers
     app.add_handler(conv)
@@ -426,12 +425,4 @@ async def main():
 
 
 if __name__ == '__main__':
-    # Check if we're already in an event loop (like in Replit)
-    try:
-        loop = asyncio.get_running_loop()
-        # If we're already in a loop, create a task instead of using asyncio.run()
-        loop.create_task(main())
-        loop.run_forever()
-    except RuntimeError:
-        # No event loop running, safe to use asyncio.run()
-        asyncio.run(main())
+    asyncio.run(main())
