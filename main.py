@@ -413,7 +413,8 @@ async def main():
             COST: [MessageHandler(filters.TEXT & ~filters.COMMAND, cost)],
             PERIOD: [MessageHandler(filters.TEXT & ~filters.COMMAND, period)],
         },
-        fallbacks=[CommandHandler('cancel', cancel)])
+        fallbacks=[CommandHandler('cancel', cancel)],
+        per_message=False)
 
     # Add handlers
     app.add_handler(conv)
@@ -425,13 +426,4 @@ async def main():
 
 
 if __name__ == '__main__':
-    try:
-        # Check if we're already in an event loop (like in Replit)
-        loop = asyncio.get_running_loop()
-        # If we're already in a loop, create a task
-        import nest_asyncio
-        nest_asyncio.apply()
-        asyncio.run(main())
-    except RuntimeError:
-        # No event loop running, safe to use asyncio.run()
-        asyncio.run(main())
+    asyncio.run(main())
