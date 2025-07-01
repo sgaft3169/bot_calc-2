@@ -1,13 +1,16 @@
-import asyncio
-from aiohttp import web
 
-async def handle(request):
-    return web.Response(text="Бот работает!")
+from flask import Flask
+import threading
 
-async def run_http_server():
-    app = web.Application()
-    app.router.add_get("/", handle)
-    runner = web.AppRunner(app)
-    await runner.setup()
-    site = web.TCPSite(runner, "0.0.0.0", 8080)
-    await site.start()
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Бот работает!"
+
+def run_http_server():
+    app.run(host='0.0.0.0', port=8080, debug=False, use_reloader=False)
+
+def start_server():
+    server_thread = threading.Thread(target=run_http_server, daemon=True)
+    server_thread.start()

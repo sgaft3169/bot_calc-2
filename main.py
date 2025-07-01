@@ -2,7 +2,7 @@ import logging
 import os
 import datetime
 import asyncio
-from http_server import run_http_server
+from http_server import start_server
 from telegram.ext import ApplicationBuilder, CommandHandler
 from io import BytesIO
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
@@ -390,9 +390,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Запуск сервера в отдельном потоке
 
 
-async def main():
+def main():
     # Start HTTP server in background
-    asyncio.create_task(run_http_server())
+    start_server()
 
     # Create Telegram bot application
     app = ApplicationBuilder().token(BOT_TOKEN).build()
@@ -421,9 +421,9 @@ async def main():
     app.add_handler(CommandHandler("history", history))
     app.add_handler(CommandHandler("help", help_command))
 
-    # Start polling
-    await app.run_polling()
+    # Start polling with run_polling() which handles event loop properly
+    app.run_polling()
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()
