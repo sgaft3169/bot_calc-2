@@ -425,4 +425,13 @@ async def main():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    try:
+        # Check if we're already in an event loop (like in Replit)
+        loop = asyncio.get_running_loop()
+        # If we're already in a loop, create a task
+        import nest_asyncio
+        nest_asyncio.apply()
+        asyncio.run(main())
+    except RuntimeError:
+        # No event loop running, safe to use asyncio.run()
+        asyncio.run(main())
