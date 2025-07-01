@@ -1,0 +1,8 @@
+python-telegram-bot==20.3
+aiohttp
+python-dotenv
+openpyxl
+reportlab
+matplotlib
+psycopg2-binary
+sqlalchemy
