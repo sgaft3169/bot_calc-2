@@ -7,6 +7,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler
 from io import BytesIO
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
+from telegram.ext import Application
 from telegram.constants import ChatAction
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font, PatternFill, Alignment
@@ -395,6 +396,15 @@ async def main():
 
     # Create Telegram bot application
     app = ApplicationBuilder().token(BOT_TOKEN).build()
+   # try:
+    #await app.initialize()  # Initialize the application
+    await app.run_polling()  # Start polling
+   # await app.idle()  # This will keep the bot running
+
+   # except Exception as e:
+    #    print(f"An error occurred: {e}")
+    #finally:
+   #     await app.shutdown()  # Ensure a clean shutdown
 
     # Import CallbackQueryHandler
     from telegram.ext import CallbackQueryHandler
@@ -420,7 +430,7 @@ async def main():
     app.add_handler(CommandHandler("help", help_command))
 
     # Start polling
-    await app.run_polling()
+    #await app.run_polling()
 
 
 if __name__ == '__main__':

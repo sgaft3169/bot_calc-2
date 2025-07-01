@@ -7,3 +7,7 @@ packages = ["cairo", "ffmpeg-full", "freetype", "ghostscript", "glibcLocales", "
 
 [deployment]
 run = ["sh", "-c", "python  main.py"]
+
+[[ports]]
+localPort = 8080
+externalPort = 80
