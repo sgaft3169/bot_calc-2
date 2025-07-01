@@ -389,27 +389,17 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Запуск сервера в отдельном потоке
 
 
-async def start(update, context):
-    await update.message.reply_text("Привет! Бот работает.")
-
-
 async def main():
+    # Start HTTP server in background
     asyncio.create_task(run_http_server())
 
+    # Create Telegram bot application
     app = ApplicationBuilder().token(BOT_TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
 
-    await app.run_polling()
-
-
-if __name__ == '__main__':
-    asyncio.run(main())
-
-    # Запуск Telegram бота
-    #  app = ApplicationBuilder().token(BOT_TOKEN).build()
-
+    # Import CallbackQueryHandler
     from telegram.ext import CallbackQueryHandler
 
+    # Create conversation handler
     conv = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
         states={
@@ -424,7 +414,14 @@ if __name__ == '__main__':
         },
         fallbacks=[CommandHandler('cancel', cancel)])
 
+    # Add handlers
     app.add_handler(conv)
     app.add_handler(CommandHandler("history", history))
     app.add_handler(CommandHandler("help", help_command))
-    app.run_polling()
+
+    # Start polling
+    await app.run_polling()
+
+
+if __name__ == '__main__':
+    asyncio.run(main())
