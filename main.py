@@ -41,7 +41,8 @@ CUR, NEW, COST, PERIOD = range(4)
 HISTORY_FILE = "история.xlsx"
 
 # Зарегистрируй шрифт вручную, добавив файл fonts/DejaVuSans.ttf
-pdfmetrics.registerFont(TTFont("DejaVuSans", "fonts/DejaVuSans.ttf"))
+font_path = "fonts/DejaVuSans.ttf"  # Make sure the font file exists in this directory
+pdfmetrics.registerFont(TTFont("DejaVuSans", font_path))
 styles = getSampleStyleSheet()
 styles.add(ParagraphStyle(name="Russian", fontName="DejaVuSans", fontSize=12))
 
